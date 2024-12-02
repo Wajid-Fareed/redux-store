@@ -16,6 +16,9 @@ export default {
         '9': '9px',
         '10': '10px',
         '11': '11px',
+      },
+      screens: {
+        'xs': '480px',
       }
     },
   },
