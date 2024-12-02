@@ -22,7 +22,7 @@ const Navbar = () => {
                     </div>
                     <ul className="hidden md:flex items-center gap-6 capitalize text-lg font-medium">
                         <li><Link href="/">Home</Link></li>
-                        <li><Link href="/about-us">About Us</Link></li>
+                        <li><Link href="/shop">Shop</Link></li>
                         <li className="relative">
                             <Link href="/wishlist">Wishlist</Link>
                             <span className="text-white bg-red-500 w-6 h-5 rounded-3xl flex justify-center items-center text-11 font-light absolute -top-2 -right-2">
