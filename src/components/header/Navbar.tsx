@@ -1,16 +1,25 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from '../re-usable/container/Container';
 import Link from 'next/link';
 import { HiMiniBars3BottomRight } from 'react-icons/hi2';
 import { ImCancelCircle } from 'react-icons/im';
+import { useSelector } from 'react-redux';
+import { IProduct, RootState } from '@/types/types';
 
 const Navbar = () => {
     const [menu, SetMenu] = useState(false);
+    const [cartCount, SetCartCount] = useState(0);
     const handleMenu = () => SetMenu(!menu);
 
-    const wishlistCount = 10; 
-    const cartCount = 10; 
+    const wishlistCount = 10;
+    const cartCounter = useSelector((state: RootState) => state.cart.value);
+    useEffect(() => {
+        if (cartCounter) {
+            const counter = cartCounter.reduce((total: number, item: IProduct) => total + (item.cartQuantity || 0), 0)
+            SetCartCount(counter);
+        }
+    }, [cartCounter]);
 
 
     return (
@@ -51,7 +60,7 @@ const Navbar = () => {
                         </button>
 
                         <div
-                            className={`fixed top-0 h-full w-64 bg-white shadow-md transition-all duration-500 text-black text-xl font-medium capitalize ${menu ? "opacity-100 right-0" : "opacity-0 -right-1/2"}`}
+                            className={`z-10 fixed top-0 h-full w-64 bg-white shadow-md transition-all duration-500 text-black text-xl font-medium capitalize ${menu ? "opacity-100 right-0" : "opacity-0 -right-1/2"}`}
                         >
                             <button
                                 className="block text-black font-bold focus:outline-none absolute top-2 right-2"

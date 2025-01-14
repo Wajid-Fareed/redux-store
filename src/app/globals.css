@@ -31,6 +31,10 @@ body {
   background-color: white;
   opacity: 1;
 }
-.heroSwiper .swiper-pagination{
+.heroSwiper:not(.productSwiper) .swiper-pagination{
   margin-bottom: 20px;
+}
+
+.productSwiper .swiper-pagination-bullet{
+  background-color: rgb(0, 0, 0);
 }
