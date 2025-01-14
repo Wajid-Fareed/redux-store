@@ -1,6 +1,8 @@
+import { StaticImageData } from "next/image";
+
 export interface IProduct {
-    posterImageUrl: { public_id: string, imageUrl: string, altText:string};
-    hoverImageUrl?: { public_id: string, imageUrl: string, altText:string };
+    posterImageUrl: { public_id: string, imageUrl: string | StaticImageData, altText:string};
+    hoverImageUrl?: { public_id: string, imageUrl: string | StaticImageData, altText:string };
     id: string;
     name: string;
     description: string;
@@ -8,7 +10,7 @@ export interface IProduct {
     salePrice: number;
     purchasePrice: number;
     category: string;
-    imageUrl: Array<{ imageIndex: number, public_id: string, imageUrl: string, id: string, altText:string }>;
+    imageUrl: Array<{ imageIndex: number, public_id: string, imageUrl: string | StaticImageData, id: string, altText:string }>;
     discountPrice: number;
     colors: Array<{ colorName: string; id: string }>;
     modelDetails: Array<{ name: string; detail: string; id: string }>;
@@ -24,4 +26,11 @@ export interface IProduct {
     isSpecialOffer?: boolean;
     isBestSeller?: boolean;
     isHeroSlider?: boolean;
+    cartQuantity?: number | undefined;
 }
+
+export interface RootState {
+    cart: {
+      value: IProduct[];  
+    };
+  }

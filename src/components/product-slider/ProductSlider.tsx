@@ -55,7 +55,7 @@ const ProductSlider = () => {
                             disableOnInteraction: false,
                         }}
                         modules={[Autoplay, Pagination]}
-                        className="heroSwiper"
+                        className="heroSwiper productSwiper !pb-10"
                         onSwiper={(swiper) => {
                             swiperRef.current = swiper;
                         }}
