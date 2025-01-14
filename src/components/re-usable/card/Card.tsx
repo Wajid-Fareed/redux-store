@@ -6,7 +6,8 @@ import React from 'react'
 import Button from '../button/Button';
 import { CiHeart } from 'react-icons/ci';
 import { useDispatch } from 'react-redux';
-import { addtocart } from '@/redux/slice/AddToCardSlice';
+import { addToCart } from '@/redux/slice/AddToCardSlice';
+import { addToWishlist } from '@/redux/slice/WishlistSlice';
 
 interface CardProps {
   card: IProduct;
@@ -17,12 +18,17 @@ const Card: React.FC<CardProps> = ({ card }) => {
   const dispatch = useDispatch();
   const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    dispatch(addtocart(card));
+    dispatch(addToCart(card));
+  };
+
+  const handleAddToWishlist = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    dispatch(addToWishlist(card));
   };
   return (
     <div onClick={() => router.push(`/shop/${generateSlug(card.name)}`)} className='cursor-pointer group'>
       <div className='relative'>
-        <span className='w-9 h-9 flex justify-center items-center rounded-lg bg-white group-hover:opacity-100 opacity-0 absolute top-4 right-4'><CiHeart size={30} /></span>
+        <span className='w-9 h-9 flex justify-center items-center rounded-lg bg-white group-hover:opacity-100 opacity-0 absolute top-4 right-4' onClick={(e) =>handleAddToWishlist(e)}><CiHeart size={30} /></span>
         <Image src={card.posterImageUrl.imageUrl} alt={card.posterImageUrl.altText} width={500} height={500} className='object-cover' />
       </div>
       <div className='mt-5 space-y-3 text-center'>
