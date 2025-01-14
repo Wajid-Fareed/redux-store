@@ -10,16 +10,21 @@ import { IProduct, RootState } from '@/types/types';
 const Navbar = () => {
     const [menu, SetMenu] = useState(false);
     const [cartCount, SetCartCount] = useState(0);
+    const [wishlistCount, SetWishlistCount] = useState(0);
     const handleMenu = () => SetMenu(!menu);
 
-    const wishlistCount = 10;
+    const wishlistCounter = useSelector((state: RootState) => state.wishlist.value);
     const cartCounter = useSelector((state: RootState) => state.cart.value);
     useEffect(() => {
         if (cartCounter) {
             const counter = cartCounter.reduce((total: number, item: IProduct) => total + (item.cartQuantity || 0), 0)
             SetCartCount(counter);
         }
-    }, [cartCounter]);
+        if (wishlistCounter) {
+            const counter = wishlistCounter.length;
+            SetWishlistCount(counter)
+        }
+    }, [cartCounter, wishlistCounter]);
 
 
     return (
@@ -31,18 +36,22 @@ const Navbar = () => {
                     </div>
                     <ul className="hidden md:flex items-center gap-6 capitalize text-lg font-medium">
                         <li><Link href="/">Home</Link></li>
-                        <li><Link href="/shop">Shop</Link></li>
+                        {/* <li><Link href="/shop">Shop</Link></li> */}
                         <li className="relative">
                             <Link href="/wishlist">Wishlist</Link>
-                            <span className="text-white bg-red-500 w-6 h-5 rounded-3xl flex justify-center items-center text-11 font-light absolute -top-2 -right-2">
-                                {wishlistCount}
-                            </span>
+                            {wishlistCount > 0 &&
+                                <span className="text-white bg-red-500 w-6 h-5 rounded-3xl flex justify-center items-center text-11 font-light absolute -top-2 -right-2">
+                                    {wishlistCount}
+                                </span>
+                            }
                         </li>
                         <li className="relative">
                             <Link href="/cart">Cart</Link>
-                            <span className="text-white bg-red-500 w-6 h-5 rounded-3xl flex justify-center items-center text-11 font-light absolute -top-2 -right-2">
-                                {cartCount}
-                            </span>
+                            {cartCount > 0 &&
+                                <span className="text-white bg-red-500 w-6 h-5 rounded-3xl flex justify-center items-center text-11 font-light absolute -top-2 -right-2">
+                                    {cartCount}
+                                </span>
+                            }
                         </li>
                     </ul>
                     <div className="md:hidden flex gap-5 items-center">

@@ -11,12 +11,15 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { IProduct } from '@/types/types';
 import { useRouter } from 'next/navigation';
 import Button from '../re-usable/button/Button';
+import { addToCart } from '@/redux/slice/AddToCardSlice';
+import { useDispatch } from 'react-redux';
 
 const HeroSlider = () => {
     const [products, setProducts] = useState<IProduct[]>([]);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const swiperRef = useRef<any>(null);
     const router = useRouter();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const filteredProducts = productData.filter((product) => product.isHeroSlider === true);
@@ -34,11 +37,14 @@ const HeroSlider = () => {
             swiperRef.current.autoplay.start();
         }
     };
-
+    const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement> , product: IProduct) => {
+        e.stopPropagation();
+        dispatch(addToCart(product));
+    };
     return (
-        <section 
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}>
+        <section
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}>
             {products.length === 0 ? (
                 <SkeletonTheme baseColor="#e0e0e0" highlightColor="#f5f5f5">
                     <Skeleton className="w-full h-[200px] xsm:h-[250px] xs:h-[300px] sm:h-[400px] md:h-[500px] xl:h-[600px] rounded-sm" />
@@ -85,7 +91,7 @@ const HeroSlider = () => {
                                         )}
 
                                         <div className="flex items-center gap-3 mt-2">
-                                            <Button variant="secondary" className="text-11 sm:text-sm md:text-base lg:text-lg font-medium md:mt-4 w-20 sm:w-28 md:w-32 lg:w-40 h-7 sm:h-8 md:h-10 lg:h-12 shadow-md">
+                                            <Button variant="secondary" onClick={(e) => handleAddToCart(e , product)} className="text-11 sm:text-sm md:text-base lg:text-lg font-medium md:mt-4 w-20 sm:w-28 md:w-32 lg:w-40 h-7 sm:h-8 md:h-10 lg:h-12 shadow-md">
                                                 Add to Cart
                                             </Button>
                                             <Button className="text-11 sm:text-sm md:text-base lg:text-lg font-medium md:mt-4 w-20 sm:w-28 md:w-32 lg:w-40 h-7 sm:h-8 md:h-10 lg:h-12 shadow-md">

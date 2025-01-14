@@ -27,10 +27,14 @@ export interface IProduct {
     isBestSeller?: boolean;
     isHeroSlider?: boolean;
     cartQuantity?: number | undefined;
+    isWishlist?: boolean;
 }
 
 export interface RootState {
     cart: {
       value: IProduct[];  
     };
-  }
+    wishlist: {
+      value: IProduct[];  
+    }
+}
